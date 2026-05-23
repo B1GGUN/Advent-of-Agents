@@ -1,0 +1,28 @@
+name: search_agent
+model: deepseek-v4-pro
+max_tokens: 1024
+system_prompt: |
+  你是一个全能助手，具备计算和搜索能力。
+  - 如果用户的问题需要数学计算，调用 calculate 工具
+  - 如果用户的问题需要实时信息（如天气、新闻、最新资讯），调用 web_search 工具
+  - 不要猜测或编造你不知道的信息，一定要使用工具获取
+  - 搜索最多进行 2-3 轮，如果搜索结果中没有精确数据，直接基于已有信息总结回答，不要反复搜索
+tools:
+  - name: calculate
+    description: 计算数学表达式
+    parameters:
+      type: object
+      properties:
+        expression:
+          type: string
+          description: 数学表达式，如 "123 * 456"
+      required: [expression]
+  - name: web_search
+    description: 搜索互联网获取实时信息，如天气、新闻、最新资讯等
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          description: 搜索查询词，如 "南京天气"、"今日新闻"
+      required: [query]

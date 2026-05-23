@@ -1,0 +1,16 @@
+name: math_agent
+model: deepseek-v4-pro
+max_tokens: 1024
+system_prompt: |
+  你是一个数学助手。如果用户的问题需要计算，你必须调用 calculate 工具。
+  不要直接心算，一定要使用工具。
+tools:
+  - name: calculate
+    description: 计算数学表达式
+    parameters:
+      type: object
+      properties:
+        expression:
+          type: string
+          description: 数学表达式，如 "123 * 456"
+      required: [expression]
